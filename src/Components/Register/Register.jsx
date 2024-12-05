@@ -1,12 +1,14 @@
-import React, { useContext, useState } from "react";
-import { useSpring, animated } from "@react-spring/web";
-import { Link } from "react-router-dom";
-import { FaGithub, FaGoogle, FaMicrosoft } from "react-icons/fa";
-import { AuthContext } from './../../AuthProvider/AuthProvider';
+import { useSpring, animated, to } from "@react-spring/web";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {  FaGoogle, FaMicrosoft, FaTwitter } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { useContext, useState } from "react";
 
 const Register = () => {
-  const {register} = useContext(AuthContext)
+  const {register, GoogleSignIn, user} = useContext(AuthContext)
+  const navigate = useNavigate()
+  const location = useLocation()
   // console.log(name)
 
   const [formData, setFormData] = useState({
@@ -64,6 +66,29 @@ const Register = () => {
     to: { background: "linear-gradient(45deg, #FBBF24, #A78BFA)" },
     config: { duration: 6000 },
   });
+
+
+
+    const handlerGoogle = (e)=>{
+      e.preventDefault()
+      GoogleSignIn()
+      .then(res =>{
+        if(res.user){
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: ` Register Successfully`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate(location.pathname || '/')
+        }
+        
+      })
+      .catch(err =>{
+        alert(err.message)
+      })
+    }
 
   return (
     <div className="relative flex justify-center rounded-2xl items-center min-h-screen overflow-hidden">
@@ -250,12 +275,12 @@ const Register = () => {
             <FaMicrosoft className="ml-5"></FaMicrosoft>
             <p className="text-lg ml-6">sign in with microsoft</p>
           </button>
-          <button className="w-full p-2 rounded-2xl border-2 border-black flex justify-center m-2 hover:bg-base-200">
+          <button onClick={handlerGoogle} className="w-full p-2 rounded-2xl border-2 border-black flex justify-center m-2 hover:bg-base-200">
             <FaGoogle></FaGoogle>
             <p className="text-lg ml-6">sign in with google</p>
           </button>
           <button className="w-full p-2 rounded-2xl border-2 border-black flex justify-center m-2 hover:bg-base-200">
-            <FaGithub></FaGithub>
+            <FaTwitter></FaTwitter>
             <p className="text-lg ml-6">sign in with github</p>
 
           </button>

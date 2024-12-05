@@ -16,6 +16,7 @@ import ArticlePage from '../Components/Dashboard/ArticlePage/ArticlePage';
 import BlogPage from '../Components/Dashboard/BlogPage/BlogePage';
 import Register from '../Components/Register/Register';
 import Login from '../Components/Login/Login'
+import AddEvent from '../Components/Dashboard/AddEvent/AddEvent';
 
 const Router = createBrowserRouter([
   {
@@ -72,9 +73,14 @@ const Router = createBrowserRouter([
             path:'blog',
             element: <BlogPage></BlogPage>
         },
+        // admin dashboard
         {
             path:"users",
             element: <AllUsers></AllUsers>
+        },
+        {
+            path:"addEvent",
+            element: <AddEvent></AddEvent>
         }
     ]
   }

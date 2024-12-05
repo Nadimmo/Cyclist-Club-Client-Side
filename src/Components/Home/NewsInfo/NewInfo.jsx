@@ -20,7 +20,7 @@ const NewInfo = () => {
       {/* Cards Section */}
       <div className="lg:grid grid-cols-3 gap-6 mx-auto">
         {/* Card 1 */}
-        <div className="card image-full w-96 mx-auto rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out">
+        <div className="card image-full lg:w-96 mx-auto rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out lg:mt-0 mt-2">
           <figure>
             <img src={img} alt="New Info" className="rounded-lg" />
           </figure>
@@ -37,7 +37,7 @@ const NewInfo = () => {
         </div>
 
         {/* Card 2 */}
-        <div className="card image-full w-96 mx-auto rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out">
+        <div className="card image-full lg:w-96 mx-auto rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out lg:mt-0 mt-2">
           <figure>
             <img src={img} alt="New Info" className="rounded-lg" />
           </figure>
@@ -54,7 +54,7 @@ const NewInfo = () => {
         </div>
 
         {/* Card 3 */}
-        <div className="card image-full w-96 mx-auto rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out">
+        <div className="card image-full lg:w-96 mx-auto rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out lg:mt-0 mt-2">
           <figure>
             <img src={img} alt="New Info" className="rounded-lg" />
           </figure>

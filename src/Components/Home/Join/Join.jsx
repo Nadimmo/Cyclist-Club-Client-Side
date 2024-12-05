@@ -1,5 +1,6 @@
 import React from "react";
 import './join.css';
+import { Link } from "react-router-dom";
 
 const Join = () => {
   return (
@@ -18,9 +19,9 @@ const Join = () => {
         </p>
 
         {/* Call to Action Button */}
-        <button className="btn btn-outline border-2 border-white text-white px-6 py-3 rounded-lg hover:bg-white hover:text-[#172a5e] transition duration-300 uppercase font-semibold">
+        <Link to={'/contact'} className="btn btn-outline border-2 border-white text-white px-6 py-3 rounded-lg hover:bg-white hover:text-[#172a5e] transition duration-300 uppercase font-semibold">
           Join Today
-        </button>
+        </Link>
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
 
 import React, { createContext, useEffect, useState } from 'react'
-import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, TwitterAuthProvider } from "firebase/auth";
 import app from './../firebase/firebase.config';
 
 const GoogleProvider = new GoogleAuthProvider();
+const TwitterProvider = new TwitterAuthProvider()
 export const AuthContext = createContext(null)
 // const GoogleProvider = new GoogleAuthProvider()
 
@@ -27,6 +28,9 @@ const AuthProvider = ({children}) => {
     const GoogleSignIn = ()=>{
         return signInWithPopup(auth, GoogleProvider)
     }
+    const TwitterSignIn = ()=>{
+        return signInWithPopup(auth, TwitterProvider)
+    }
 
     useEffect(()=>{
         const Unsubscribe = onAuthStateChanged(auth,(currentUser) =>{
@@ -46,7 +50,8 @@ const AuthProvider = ({children}) => {
         login,
         logOut,
         user,
-        GoogleSignIn
+        GoogleSignIn,
+        TwitterSignIn
     }
 
 

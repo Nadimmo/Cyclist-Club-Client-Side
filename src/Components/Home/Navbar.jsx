@@ -1,10 +1,19 @@
-import React, { useContext } from "react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
- 
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleLogout = () => {
+    logOut();
+    setShowPopup(false); // Close popup after logout
+  };
+
+  const togglePopup = () => {
+    setShowPopup(!showPopup);
+  };
 
   const Links = (
     <>
@@ -25,6 +34,7 @@ const Navbar = () => {
       </li>
     </>
   );
+
   return (
     <div>
       <div className="navbar bg-base-100">
@@ -56,22 +66,46 @@ const Navbar = () => {
           <img
             className="w-14 h-14"
             src="https://i.ibb.co.com/TvdHTzH/logo.jpg"
+            alt="Logo"
           />
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{Links}</ul>
         </div>
         <div className="navbar-end">
-          {user ? 
-            <>
-              <button onClick={logOut} className="btn btn-info">SignOut</button>
-            </>
-           : 
+          {user ? (
+            <div className="relative">
+              <div
+                onClick={togglePopup}
+                className="cursor-pointer flex items-center space-x-2"
+              >
+                {user.photoURL ? (
+                  <img
+                    src={user.photoURL}
+                    alt={user.displayName || "User"}
+                    className="w-10 h-10 rounded-full"
+                  />
+                ) : (
+                  <p className="font-bold">{user.displayName || "User"}</p>
+                )}
+              </div>
+              {showPopup && (
+                <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg p-4">
+                  <p className="font-semibold mb-2">{user.displayName || "User"}</p>
+                  <button
+                    onClick={handleLogout}
+                    className="btn btn-sm btn-info w-full"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
             <Link to={"/register"}>
               <p className="btn btn-info">Login</p>
             </Link>
-          
-          }
+          )}
         </div>
       </div>
     </div>

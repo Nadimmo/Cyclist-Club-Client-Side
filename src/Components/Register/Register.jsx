@@ -6,7 +6,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useContext, useState } from "react";
 
 const Register = () => {
-  const {register, GoogleSignIn, user} = useContext(AuthContext)
+  const {register, GoogleSignIn, user, TwitterSignIn} = useContext(AuthContext)
   const navigate = useNavigate()
   const location = useLocation()
   // console.log(name)
@@ -81,7 +81,27 @@ const Register = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-          navigate(location.pathname || '/')
+          navigate(location.state || '/')
+        }
+        
+      })
+      .catch(err =>{
+        alert(err.message)
+      })
+    }
+    const handlerTwitter = (e)=>{
+      e.preventDefault()
+      GoogleSignIn()
+      .then(res =>{
+        if(res.user){
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: ` Register Successfully`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate(location.state || '/')
         }
         
       })
@@ -279,9 +299,9 @@ const Register = () => {
             <FaGoogle></FaGoogle>
             <p className="text-lg ml-6">sign in with google</p>
           </button>
-          <button className="w-full p-2 rounded-2xl border-2 border-black flex justify-center m-2 hover:bg-base-200">
+          <button onClick={handlerTwitter} className="w-full p-2 rounded-2xl border-2 border-black flex justify-center m-2 hover:bg-base-200">
             <FaTwitter></FaTwitter>
-            <p className="text-lg ml-6">sign in with github</p>
+            <p className="text-lg ml-6">sign in with twitter</p>
 
           </button>
         </div>

@@ -54,7 +54,7 @@ const AddEvent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-200 flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-r from-blue-500 via-green-400 to-purple-500  flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Add New Event</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -135,7 +135,7 @@ const AddEvent = () => {
           <div>
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-600 to-red-500 text-white font-bold py-2 px-4 rounded-lg hover:opacity-90 transition"
+              className="w-full bg-gradient-to-r from-green-600 to-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:opacity-90 transition"
             >
               Add Event
             </button>

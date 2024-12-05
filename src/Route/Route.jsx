@@ -17,6 +17,7 @@ import BlogPage from '../Components/Dashboard/BlogPage/BlogePage';
 import Register from '../Components/Register/Register';
 import Login from '../Components/Login/Login'
 import AddEvent from '../Components/Dashboard/AddEvent/AddEvent';
+import AddNewsInfoPage from '../Components/Dashboard/AddNewsInfoPage/AddNewsInfopage';
 
 const Router = createBrowserRouter([
   {
@@ -81,6 +82,10 @@ const Router = createBrowserRouter([
         {
             path:"addEvent",
             element: <AddEvent></AddEvent>
+        },
+        {
+            path:'newUpdate',
+            element: <AddNewsInfoPage></AddNewsInfoPage>
         }
     ]
   }

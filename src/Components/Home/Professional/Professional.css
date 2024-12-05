@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 .hover-effect {
     transition: transform 0.3s ease-in-out;
 }
@@ -6,12 +6,3 @@
 .hover-effect:hover {
     transform: scale(1.1);
 }
-=======
-.hover-effect {
-    transition: transform 0.3s ease-in-out;
-}
-
-.hover-effect:hover {
-    transform: scale(1.1);
-}
->>>>>>> 6d2a2ddcf10cf48201a02a1d4e1789f924c86fec

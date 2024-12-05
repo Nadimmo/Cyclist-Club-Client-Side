@@ -1,16 +1,8 @@
-<<<<<<< HEAD
+
 .back{
     background-image: url('../../../assets/join.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     height: 300px;
-=======
-.back{
-    background-image: url('../../../assets/join.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 300px;
->>>>>>> 6d2a2ddcf10cf48201a02a1d4e1789f924c86fec
 }

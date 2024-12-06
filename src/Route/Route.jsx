@@ -18,6 +18,7 @@ import Register from '../Components/Register/Register';
 import Login from '../Components/Login/Login'
 import AddEvent from '../Components/Dashboard/AddEvent/AddEvent';
 import AddNewsInfoPage from '../Components/Dashboard/AddNewsInfoPage/AddNewsInfopage';
+import EventCalender from '../Components/EventCalender/EventCalender';
 
 const Router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const Router = createBrowserRouter([
         {
             path:'/about',
             element: <About></About>
+        },
+        {
+            path:'/calender',
+            element:<EventCalender></EventCalender>
         },
         {
             path:'/gallery',

@@ -24,6 +24,9 @@ const Navbar = () => {
         <NavLink to={"/about"}>About</NavLink>
       </li>
       <li>
+        <NavLink to={"/calender"}>Event-Calender</NavLink>
+      </li>
+      <li>
         <NavLink to={"/gallery"}>Gallery</NavLink>
       </li>
       <li>

@@ -54,8 +54,8 @@ const AddEvent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-500 via-green-400 to-purple-500  flex items-center justify-center">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl">
+    <div className="min-h-screen max-w-full bg-gradient-to-r from-blue-500 via-green-400 to-purple-500  flex items-center justify-center">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-3xl">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Add New Event</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Title */}
@@ -92,6 +92,20 @@ const AddEvent = () => {
               value={formData.location}
               onChange={handleChange}
               placeholder="Enter event location"
+              className="w-full border border-gray-300 rounded-lg p-2"
+              required
+            />
+          </div>
+         
+          {/* Author */}
+          <div>
+            <label className="block text-gray-700 font-semibold mb-2">Author (Admin/Moderator)</label>
+            <input
+              type="text"
+              name="author"
+              value={formData.author}
+              onChange={handleChange}
+              placeholder="Enter admin/moderator name"
               className="w-full border border-gray-300 rounded-lg p-2"
               required
             />

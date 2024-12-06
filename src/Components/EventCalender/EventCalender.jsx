@@ -8,18 +8,10 @@ const EventCalender = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const { events } = useEvents();
 
-  // Helper function to format dates as MM-DD-YY
-  const formatDateToMMDDYY = (date) => {
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
-    const year = date.getFullYear().toString().slice(-2);
-    return `${month}-${day}-${year}`;
-  };
+    // Format selected date to YYYY-MM-DD
+  const formattedSelectedDate = selectedDate.toISOString().split("T")[0];
 
-  // Format selected date to match event date format
-  const formattedSelectedDate = formatDateToMMDDYY(selectedDate);
-
-  // Filter events based on the selected date
+  // Filter events for the selected date
   const filteredEvents = events.filter((event) => event.date === formattedSelectedDate);
 
   return (
@@ -37,13 +29,14 @@ const EventCalender = () => {
           <Calendar
             onChange={setSelectedDate}
             value={selectedDate}
-            tileClassName={({ date }) => {
-              const formattedDate = formatDateToMMDDYY(date);
-              return events.some((event) => event.date === formattedDate)
-                ? "bg-yellow-300 text-black font-bold"
-                : "";
-            }}
-            className="rounded-lg shadow-md"
+            tileClassName={({ date }) =>
+              events.some(
+                (event) => event.date === date.toISOString().split("T")[0]
+              )
+                ? "highlight"
+                : ""
+            }
+            className="rounded-lg"
           />
           <p className="mt-4 text-sm text-gray-600">
             Dates highlighted in yellow have events.

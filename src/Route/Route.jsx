@@ -19,6 +19,7 @@ import Login from '../Components/Login/Login'
 import AddEvent from '../Components/Dashboard/AddEvent/AddEvent';
 import AddNewsInfoPage from '../Components/Dashboard/AddNewsInfoPage/AddNewsInfopage';
 import EventCalender from '../Components/EventCalender/EventCalender';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
 
 const Router = createBrowserRouter([
   {
@@ -35,7 +36,7 @@ const Router = createBrowserRouter([
         },
         {
             path:'/calender',
-            element:<EventCalender></EventCalender>
+            element: <PrivateRoute><EventCalender></EventCalender></PrivateRoute>
         },
         {
             path:'/gallery',

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import useAxiosPublic from './../../Hooks/useAxiosPublic';
+import Swal from "sweetalert2";
 
 const AddNewsInfoPage = () => {
+  const axiosPublic = useAxiosPublic()
   const [formData, setFormData] = useState({
     title: "",
-    category: "",
     author: "",
     type: "",
     dateTime: "",
@@ -18,16 +20,13 @@ const AddNewsInfoPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://your-api-url.com/news", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const result = await response.json();
-      if (response.ok) {
-        alert("News/Info added successfully!");
+      const response = await axiosPublic.post("/newsInfo", formData);
+      if (response.data.insertedId) {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Event has been added successfully.",
+        });
         setFormData({
           title: "",
           category: "",
@@ -36,11 +35,18 @@ const AddNewsInfoPage = () => {
           dateTime: "",
         });
       } else {
-        alert(`Error: ${result.message}`);
+        Swal.fire({
+          icon: "error",
+          title: "Failed!",
+          text: "Could not add the event. Please try again later.",
+        });
       }
     } catch (error) {
-      console.error("Error submitting the news:", error);
-      alert("Failed to submit news/info!");
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "Something went wrong. Please try again later.",
+      });
     }
   };
 
@@ -58,19 +64,6 @@ const AddNewsInfoPage = () => {
               value={formData.title}
               onChange={handleChange}
               placeholder="Enter title"
-              className="w-full border border-gray-300 rounded-lg p-2"
-              required
-            />
-          </div>
-          {/* Category */}
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">Category</label>
-            <input
-              type="text"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              placeholder="Enter category"
               className="w-full border border-gray-300 rounded-lg p-2"
               required
             />

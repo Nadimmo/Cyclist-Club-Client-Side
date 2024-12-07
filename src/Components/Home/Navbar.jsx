@@ -67,7 +67,7 @@ const Navbar = () => {
             </ul>
           </div>
           <img
-            className="w-14 h-14"
+            className="w-14 h-14 hover:shadow-xl hover:shadow-gray-500 rounded-[50%] cursor-pointer "
             src="https://i.ibb.co.com/TvdHTzH/logo.jpg"
             alt="Logo"
           />
@@ -80,7 +80,7 @@ const Navbar = () => {
             <div className="relative">
               <div
                 onClick={togglePopup}
-                className="cursor-pointer flex items-center space-x-2"
+                className="cursor-pointer flex items-center space-x-2 border-2 rounded-[50%] border-[#EBC917] p-2 shadow-xl shadow-gray-200 hover:shadow-slate-500"
               >
                 {user.photoURL ? (
                   <img
@@ -93,7 +93,7 @@ const Navbar = () => {
                 )}
               </div>
               {showPopup && (
-                <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg p-4">
+                <div className="absolute right-0 mt-2 w-48 bg-sky-300 shadow-lg rounded-lg p-4">
                   <p className="font-semibold mb-2">{user.displayName || "User"}</p>
                   <button
                     onClick={handleLogout}

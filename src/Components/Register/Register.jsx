@@ -1,14 +1,17 @@
 import { useSpring, animated, to } from "@react-spring/web";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import {  FaGoogle, FaMicrosoft, FaTwitter } from "react-icons/fa";
+import { FaGoogle, FaMicrosoft, FaTwitter } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useContext, useState } from "react";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 const Register = () => {
-  const {register, GoogleSignIn, user, TwitterSignIn} = useContext(AuthContext)
-  const navigate = useNavigate()
-  const location = useLocation()
+  const { register, GoogleSignIn, user, TwitterSignIn } =
+    useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const axiosPublic = useAxiosPublic();
   // console.log(name)
 
   const [formData, setFormData] = useState({
@@ -28,37 +31,42 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     register(formData.email, formData.password)
-    .then(res =>{
-      if(res.user){
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: `${formData.firstName} Register Successfully`,
-          showConfirmButton: false,
-          timer: 1500,
+      .then((res) => {
+        if (res.user) {
+          // send user data to database
+          axiosPublic.post("/users", formData).then((res) => {
+            if (res.data.insertedId) {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: `${formData.firstName} Register Successfully`,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
+        }
+        setFormData({
+          firstName: "",
+          email: "",
+          address: "",
+          city: "",
+          contactNumber: "",
+          age: "",
+          password: "",
+          membershipType: "Regular",
         });
-      }
-      setFormData({
-        firstName: "",
-        email: "",
-        address: "",
-        city: "",
-        contactNumber: "",
-        age: "",
-        password: "",
-        membershipType: "Regular",
+        navigate(location.state || '/')
+
+      })
+      // console.log("Form Data Submitted:", formData);
+      .catch((err) => {
+        alert(err.message);
       });
-    })
-    // console.log("Form Data Submitted:", formData);
-    .catch((err)=>{
-      alert(err.message)
-    })
-  
   };
-  
- 
+
   // Animation for a smooth, color-changing gradient background
   const animatedBackground = useSpring({
     loop: { reverse: true },
@@ -67,13 +75,11 @@ const Register = () => {
     config: { duration: 6000 },
   });
 
-
-
-    const handlerGoogle = (e)=>{
-      e.preventDefault()
-      GoogleSignIn()
-      .then(res =>{
-        if(res.user){
+  const handlerGoogle = (e) => {
+    e.preventDefault();
+    GoogleSignIn()
+      .then((res) => {
+        if (res.user) {
           Swal.fire({
             position: "top-end",
             icon: "success",
@@ -81,19 +87,18 @@ const Register = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-          navigate(location.state || '/')
+          navigate(location.state || "/");
         }
-        
       })
-      .catch(err =>{
-        alert(err.message)
-      })
-    }
-    const handlerTwitter = (e)=>{
-      e.preventDefault()
-      GoogleSignIn()
-      .then(res =>{
-        if(res.user){
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+  const handlerTwitter = (e) => {
+    e.preventDefault();
+    TwitterSignIn()
+      .then((res) => {
+        if (res.user) {
           Swal.fire({
             position: "top-end",
             icon: "success",
@@ -101,14 +106,13 @@ const Register = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-          navigate(location.state || '/')
+          navigate(location.state || "/");
         }
-        
       })
-      .catch(err =>{
-        alert(err.message)
-      })
-    }
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
 
   return (
     <div className="relative flex justify-center rounded-2xl items-center min-h-screen overflow-hidden">
@@ -131,149 +135,145 @@ const Register = () => {
         </h2>
 
         <div className="grid grid-cols-2 gap-4">
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="firstName"
-          >
-            First Name
-          </label>
-          <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-            required
-          />
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="firstName"
+            >
+              First Name
+            </label>
+            <input
+              type="text"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="address"
+            >
+              Address
+            </label>
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="city"
+            >
+              City
+            </label>
+            <input
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="contactNumber"
+            >
+              Contact Number
+            </label>
+            <input
+              type="text"
+              name="contactNumber"
+              value={formData.contactNumber}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="age"
+            >
+              Age
+            </label>
+            <input
+              type="number"
+              name="age"
+              value={formData.age}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="age"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4 w-full">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="membershipType"
+            >
+              Membership Type
+            </label>
+            <select
+              name="membershipType"
+              value={formData.membershipType}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+              required
+            >
+              <option value="Regular">Regular</option>
+              <option value="Premium">Premium</option>
+              <option value="VIP">VIP</option>
+            </select>
+          </div>
         </div>
-
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="email"
-          >
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="address"
-          >
-            Address
-          </label>
-          <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="city"
-          >
-            City
-          </label>
-          <input
-            type="text"
-            name="city"
-            value={formData.city}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="contactNumber"
-          >
-            Contact Number
-          </label>
-          <input
-            type="text"
-            name="contactNumber"
-            value={formData.contactNumber}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="age"
-          >
-            Age
-          </label>
-          <input
-            type="number"
-            name="age"
-            value={formData.age}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="age"
-          >
-            Password
-          </label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-            required
-          />
-        </div>
-
-
-        <div className="mb-4 w-full">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="membershipType"
-          >
-            Membership Type
-          </label>
-          <select
-            name="membershipType"
-            value={formData.membershipType}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-            required
-          >
-            <option value="Regular">Regular</option>
-            <option value="Premium">Premium</option>
-            <option value="VIP">VIP</option>
-          </select>
-        </div>
-
-        </div>
-
-        
 
         <div className="flex items-center justify-between">
           <button
@@ -295,14 +295,19 @@ const Register = () => {
             <FaMicrosoft className="ml-5"></FaMicrosoft>
             <p className="text-lg ml-6">sign in with microsoft</p>
           </button>
-          <button onClick={handlerGoogle} className="w-full p-2 rounded-2xl border-2 border-black flex justify-center m-2 hover:bg-base-200">
+          <button
+            onClick={handlerGoogle}
+            className="w-full p-2 rounded-2xl border-2 border-black flex justify-center m-2 hover:bg-base-200"
+          >
             <FaGoogle></FaGoogle>
             <p className="text-lg ml-6">sign in with google</p>
           </button>
-          <button onClick={handlerTwitter} className="w-full p-2 rounded-2xl border-2 border-black flex justify-center m-2 hover:bg-base-200">
+          <button
+            onClick={handlerTwitter}
+            className="w-full p-2 rounded-2xl border-2 border-black flex justify-center m-2 hover:bg-base-200"
+          >
             <FaTwitter></FaTwitter>
             <p className="text-lg ml-6">sign in with twitter</p>
-
           </button>
         </div>
       </form>

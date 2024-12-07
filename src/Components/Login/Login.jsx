@@ -1,18 +1,20 @@
 
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import img from '../../assets/banner.jpg'
 import { useContext } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
 const Login = () => {
-
   const {login} = useContext(AuthContext)
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const handlerLogin = (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
+   
     // console.log(email,password)
 
     login(email,password)
@@ -25,6 +27,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        navigate(location.state || "/")
         form.reset()
       }
       

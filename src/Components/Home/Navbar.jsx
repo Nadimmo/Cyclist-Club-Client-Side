@@ -18,35 +18,93 @@ const Navbar = () => {
   const Links = (
     <>
       <li>
-        <NavLink to={"/"}>Home</NavLink>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `hover:text-yellow-400 ${
+              isActive ? "text-yellow-400" : "text-white"
+            }`
+          }
+        >
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink to={"/about"}>About</NavLink>
+        <NavLink
+          to="/about"
+          className={({ isActive }) =>
+            `hover:text-yellow-400 ${
+              isActive ? "text-yellow-400" : "text-white"
+            }`
+          }
+        >
+          About
+        </NavLink>
       </li>
       <li>
-        <NavLink to={"/calender"}>Event-Calender</NavLink>
+        <NavLink
+          to="/calender"
+          className={({ isActive }) =>
+            `hover:text-yellow-400 ${
+              isActive ? "text-yellow-400" : "text-white"
+            }`
+          }
+        >
+          Event-Calender
+        </NavLink>
       </li>
       <li>
-        <NavLink to={"/gallery"}>Gallery</NavLink>
+        <NavLink
+          to="/gallery"
+          className={({ isActive }) =>
+            `hover:text-yellow-400 ${
+              isActive ? "text-yellow-400" : "text-white"
+            }`
+          }
+        >
+          Gallery
+        </NavLink>
       </li>
       <li>
-        <NavLink to={"/dashboard/event"}>Dashboard</NavLink>
+        <NavLink
+          to="/dashboard/event"
+          className={({ isActive }) =>
+            `hover:text-yellow-400 ${
+              isActive ? "text-yellow-400" : "text-white"
+            }`
+          }
+        >
+          Dashboard
+        </NavLink>
       </li>
       <li>
-        <NavLink to={"/contact"}>Contact</NavLink>
+        <NavLink
+          to="/contact"
+          className={({ isActive }) =>
+            `hover:text-yellow-400 ${
+              isActive ? "text-yellow-400" : "text-white"
+            }`
+          }
+        >
+          Contact
+        </NavLink>
       </li>
     </>
   );
 
   return (
-    <div>
-      <div className="navbar bg-base-100">
+    <div className="bg-gradient-to-l from-blue-300 via-blue-600 to-purple-600 shadow-lg">
+      <div className="navbar px-4 lg:px-8">
+        {/* Logo Section */}
         <div className="navbar-start">
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <button
+              tabIndex={0}
+              className="btn btn-ghost text-white hover:bg-blue-700 lg:hidden"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -58,29 +116,35 @@ const Navbar = () => {
                   d="M4 6h16M4 12h8m-8 6h16"
                 />
               </svg>
-            </div>
+            </button>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-white rounded-box mt-3 w-52 p-2 shadow-lg"
             >
               {Links}
             </ul>
           </div>
-          <img
-            className="w-14 h-14 hover:shadow-xl hover:shadow-gray-500 rounded-[50%] cursor-pointer "
-            src="https://i.ibb.co.com/TvdHTzH/logo.jpg"
-            alt="Logo"
-          />
+          <Link to="/">
+            <img
+              className="w-14 h-14 hover:shadow-md rounded-full cursor-pointer"
+              src="https://i.ibb.co.com/TvdHTzH/logo.jpg"
+              alt="Logo"
+            />
+          </Link>
         </div>
+
+        {/* Links for Larger Screens */}
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{Links}</ul>
+          <ul className="menu menu-horizontal px-1 space-x-4">{Links}</ul>
         </div>
+
+        {/* User Profile / Login Section */}
         <div className="navbar-end">
           {user ? (
             <div className="relative">
               <div
                 onClick={togglePopup}
-                className="cursor-pointer flex items-center space-x-2 border-2 rounded-[50%] border-[#EBC917] p-2 shadow-xl shadow-gray-200 hover:shadow-slate-500"
+                className="cursor-pointer flex items-center space-x-2 border-2 border-yellow-400 rounded-full p-2 shadow hover:shadow-md transition"
               >
                 {user.photoURL ? (
                   <img
@@ -89,15 +153,17 @@ const Navbar = () => {
                     className="w-10 h-10 rounded-full"
                   />
                 ) : (
-                  <p className="font-bold">{user.displayName || "User"}</p>
+                  <p className="text-white font-semibold">{user.displayName || "User"}</p>
                 )}
               </div>
               {showPopup && (
-                <div className="absolute right-0 mt-2 w-48 bg-sky-300 shadow-lg rounded-lg p-4">
-                  <p className="font-semibold mb-2">{user.displayName || "User"}</p>
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg p-4">
+                  <p className="font-semibold mb-2 text-center">
+                    {user.displayName || "User"}
+                  </p>
                   <button
                     onClick={handleLogout}
-                    className="btn btn-sm btn-info w-full"
+                    className="btn btn-sm w-full bg-blue-500 hover:bg-blue-600 text-white"
                   >
                     Sign Out
                   </button>
@@ -105,8 +171,10 @@ const Navbar = () => {
               )}
             </div>
           ) : (
-            <Link to={"/register"}>
-              <p className="btn btn-info">Login</p>
+            <Link to="/register">
+              <button className="btn bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg shadow hover:shadow-md transition">
+                Login
+              </button>
             </Link>
           )}
         </div>

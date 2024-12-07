@@ -58,8 +58,7 @@ const Register = () => {
           password: "",
           membershipType: "Regular",
         });
-        navigate(location.state || '/')
-
+        navigate(location.state || "/");
       })
       // console.log("Form Data Submitted:", formData);
       .catch((err) => {
@@ -80,12 +79,22 @@ const Register = () => {
     GoogleSignIn()
       .then((res) => {
         if (res.user) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: ` Register Successfully`,
-            showConfirmButton: false,
-            timer: 1500,
+          const name = res.user.displayName;
+          const email = res.user.email;
+          const userInfo = {
+            firstName: name,
+            email: email,
+          };
+          axiosPublic.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: ` Register Successfully`,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
           });
           navigate(location.state || "/");
         }
@@ -94,18 +103,31 @@ const Register = () => {
         alert(err.message);
       });
   };
+
+
   const handlerTwitter = (e) => {
     e.preventDefault();
     TwitterSignIn()
       .then((res) => {
         if (res.user) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: ` Register Successfully`,
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          const name = res.user.displayName;
+          const email = res.user.email;
+          const userInfo = {
+            firstName: name,
+            email: email,
+          };
+          axiosPublic.post('/users', userInfo)
+          .then(res =>{
+            if(res.data.insertedId){
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: ` Register Successfully`,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          })
           navigate(location.state || "/");
         }
       })

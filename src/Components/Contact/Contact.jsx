@@ -1,7 +1,39 @@
 import React from "react";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 const Contact = () => {
+  const axiosPublic = useAxiosPublic()
+
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const formData = {
+      name: e.target.name.value,
+      email: e.target.email.value,
+      message: e.target.message.value,
+    };
+
+    // console.log("Form Data:", formData);
+
+    // Send data to the backend
+    axiosPublic.post("/contact", formData)
+      .then((res) => {
+        if(res.data.insertedId){
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "Contact has been added successfully.",
+          });
+        }
+        e.target.reset(); // Reset the form after submission
+      })
+      .catch((error) => {
+        alert( error.message,"Please try again.");
+      });
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-5">
       <div className="max-w-4xl w-full bg-white rounded-lg shadow-lg p-8 mt-10">
@@ -15,7 +47,7 @@ const Contact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Contact Form */}
           <div>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleFormSubmit}>
               <div>
                 <label
                   htmlFor="name"
@@ -26,7 +58,9 @@ const Contact = () => {
                 <input
                   type="text"
                   id="name"
+                  name="name"
                   placeholder="Enter your name"
+                  required
                   className="w-full px-4 py-2 mt-2 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:outline-none"
                 />
               </div>
@@ -40,7 +74,9 @@ const Contact = () => {
                 <input
                   type="email"
                   id="email"
+                  name="email"
                   placeholder="Enter your email"
+                  required
                   className="w-full px-4 py-2 mt-2 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:outline-none"
                 />
               </div>
@@ -53,8 +89,10 @@ const Contact = () => {
                 </label>
                 <textarea
                   id="message"
+                  name="message"
                   rows="4"
                   placeholder="Write your message here"
+                  required
                   className="w-full px-4 py-2 mt-2 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:outline-none"
                 ></textarea>
               </div>

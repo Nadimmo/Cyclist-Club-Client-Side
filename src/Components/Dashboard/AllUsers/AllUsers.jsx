@@ -67,7 +67,7 @@ const AllUser = () => {
 
           {/* Table Body */}
           <tbody className="divide-y divide-gray-200">
-            {users.map((user, index) => (
+            {users.length > 0 ? users.map((user, index) => (
               <tr key={user._id} className="hover:bg-gray-50">
                 <td className="px-4 py-3 text-gray-700">{index + 1}</td>
                 <td className="px-4 py-3 text-gray-700">{user.email}</td>
@@ -106,7 +106,7 @@ const AllUser = () => {
                   </button>
                 </td>
               </tr>
-            ))}
+            )): <p className="text-gray-500 text-center">No data in now please wait... </p>}
           </tbody>
         </table>
       </div>

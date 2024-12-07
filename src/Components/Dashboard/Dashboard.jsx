@@ -69,10 +69,18 @@ const Dashboard = () => {
                     </li>
                     <li>
                         <NavLink
-                            to="newUpdate"
+                            to="newsUpdate"
                             className="text-xl hover:text-yellow-300 transition duration-300"
                         >
                             News & Update
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="request"
+                            className="text-xl hover:text-yellow-300 transition duration-300"
+                        >
+                            Request user
                         </NavLink>
                     </li>
                 </ul>

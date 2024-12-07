@@ -20,6 +20,7 @@ import AddEvent from '../Components/Dashboard/AddEvent/AddEvent';
 import AddNewsInfoPage from '../Components/Dashboard/AddNewsInfoPage/AddNewsInfopage';
 import EventCalender from '../Components/EventCalender/EventCalender';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import Request from '../Components/Dashboard/Request/Request';
 
 const Router = createBrowserRouter([
   {
@@ -90,8 +91,12 @@ const Router = createBrowserRouter([
             element: <AddEvent></AddEvent>
         },
         {
-            path:'newUpdate',
+            path:'newsUpdate',
             element: <AddNewsInfoPage></AddNewsInfoPage>
+        },
+        {
+            path:'request',
+            element: <Request></Request>
         }
     ]
   }

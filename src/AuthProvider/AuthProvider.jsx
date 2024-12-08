@@ -19,7 +19,7 @@ export const AuthContext = createContext(null);
 // const GoogleProvider = new GoogleAuthProvider()
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const axiosPublic = useAxiosPublic();
   const auth = getAuth(app);
@@ -66,7 +66,7 @@ const AuthProvider = ({ children }) => {
     return () => {
       Unsubscribe();
     };
-  }, [auth, axiosPublic]);
+  }, [ axiosPublic]);
 
   const AuthInfo = {
     register,

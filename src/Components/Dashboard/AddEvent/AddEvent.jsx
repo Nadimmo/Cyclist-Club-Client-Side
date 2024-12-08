@@ -1,9 +1,9 @@
 import React from "react";
 import Swal from "sweetalert2";
-import useAxiosPublic from "./../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const AddEvent = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure()
   const hosting_image_key = "1b65a8a855445b1b3daf858e85fd4479";
   const hosting_image_api = `https://api.imgbb.com/1/upload?key=${hosting_image_key}`;
 
@@ -42,7 +42,7 @@ const AddEvent = () => {
     formData.append("image", imageFile);
 
     try {
-      const imageResponse = await axiosPublic.post(
+      const imageResponse = await axiosSecure.post(
         hosting_image_api,
         formData,
         {
@@ -67,7 +67,7 @@ const AddEvent = () => {
         };
         const jsonString = JSON.stringify(eventData);
         // Send event data to database
-        const response = await axiosPublic.post("/events", jsonString, {
+        const response = await axiosSecure.post("/events", jsonString, {
           headers: { "Content-Type": "application/json" },
         });
 

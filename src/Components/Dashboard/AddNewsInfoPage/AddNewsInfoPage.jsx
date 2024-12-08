@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import useAxiosPublic from './../../Hooks/useAxiosPublic';
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const AddNewsInfoPage = () => {
-  const axiosPublic = useAxiosPublic()
+  const axiosSecure = useAxiosSecure()
   const [formData, setFormData] = useState({
     title: "",
     author: "",
@@ -20,7 +20,7 @@ const AddNewsInfoPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axiosPublic.post("/newsInfo", formData);
+      const response = await axiosSecure.post("/newsInfo", formData);
       if (response.data.insertedId) {
         Swal.fire({
           icon: "success",

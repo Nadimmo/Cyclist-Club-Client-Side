@@ -2,35 +2,55 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
 import userAllUser from "../../Hooks/userAllUser";
-import useAxiosPublic from "./../../Hooks/useAxiosPublic";
+import useAxiosSecure from "./../../Hooks/useAxiosSecure";
 
 const AllUser = () => {
   const { users, refetch } = userAllUser();
   const { user } = useContext(AuthContext);
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   const handlerAdmin = (user) => {
-    // axiosSecure
-    //   .patch(`/user/admin/${user._id}`)
-    //   .then((res) => {
-    //     if (res.data.modifiedCount > 0) {
-    //       refetch();
-    //       Swal.fire({
-    //         position: "top-end",
-    //         icon: "success",
-    //         title: `${user.name} is an Admin Now!`,
-    //         showConfirmButton: false,
-    //         timer: 1500,
-    //       });
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     alert(error.message);
-    //   });
+    axiosSecure
+      .patch(`/user/admin/${user._id}`)
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          refetch();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${user.firstName} is an Admin Now!`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
+  const handlerModerator = (user) => {
+    axiosSecure
+      .patch(`/user/moderator/${user._id}`)
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          refetch();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${user.firstName} is an Admin Now!`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   const handlerDelete = (id) => {
-    axiosPublic
+    axiosSecure
       .delete(`/users/${id}`)
       .then((res) => {
         refetch();
@@ -67,46 +87,54 @@ const AllUser = () => {
 
           {/* Table Body */}
           <tbody className="divide-y divide-gray-200">
-            {users.length > 0 ? users.map((user, index) => (
-              <tr key={user._id} className="hover:bg-gray-50">
-                <td className="px-4 py-3 text-gray-700">{index + 1}</td>
-                <td className="px-4 py-3 text-gray-700">{user.email}</td>
-                <td className="px-4 py-3 text-center text-gray-700">
-                  {user.role === "admin" ? (
-                    <span className="text-green-600 font-semibold">Admin</span>
-                  ) : (
+            {users.length > 0 ? (
+              users.map((user, index) => (
+                <tr key={user._id} className="hover:bg-gray-50">
+                  <td className="px-4 py-3 text-gray-700">{index + 1}</td>
+                  <td className="px-4 py-3 text-gray-700">{user.email}</td>
+                  <td className="px-4 py-3 text-center text-gray-700">
+                    {user.role === "admin" ? (
+                      <span className="text-green-600 font-semibold">
+                        Admin
+                      </span>
+                    ) : (
+                      <button
+                        onClick={() => handlerAdmin(user)}
+                        className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded transition"
+                      >
+                        Make Admin
+                      </button>
+                    )}
+                  </td>
+                  <td className="px-4 py-3 text-center text-gray-700">
+                    {user.role === "moderator" ? (
+                      <span className="text-green-600 font-semibold">
+                        Moderator
+                      </span>
+                    ) : (
+                      <button
+                        onClick={() => handlerModerator(user)}
+                        className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded transition"
+                      >
+                        Make Moderator
+                      </button>
+                    )}
+                  </td>
+                  <td className="px-4 py-3 text-center">
                     <button
-                      onClick={() => handlerAdmin(user)}
-                      className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded transition"
+                      onClick={() => handlerDelete(user._id)}
+                      className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded transition"
                     >
-                      Make Admin
+                      Remove
                     </button>
-                  )}
-                </td>
-                <td className="px-4 py-3 text-center text-gray-700">
-                  {user.role === "moderator" ? (
-                    <span className="text-green-600 font-semibold">
-                      Moderator
-                    </span>
-                  ) : (
-                    <button
-                      onClick={() => handlerAdmin(user)}
-                      className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded transition"
-                    >
-                      Make Moderator
-                    </button>
-                  )}
-                </td>
-                <td className="px-4 py-3 text-center">
-                  <button
-                    onClick={() => handlerDelete(user._id)}
-                    className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded transition"
-                  >
-                    Remove
-                  </button>
-                </td>
-              </tr>
-            )): <p className="text-gray-500 text-center">No data in now please wait... </p>}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <p className="text-gray-500 text-center">
+                No data in now please wait...{" "}
+              </p>
+            )}
           </tbody>
         </table>
       </div>

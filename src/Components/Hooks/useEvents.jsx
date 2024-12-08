@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 const useEvents = () => {
     const axiosPublic = useAxiosPublic()
     const {data: events = []} = useQuery({
-        queryKey: 'events',
+        queryKey: "events",
         queryFn: async()=>{
             const res = await axiosPublic.get('/events')
             return res.data

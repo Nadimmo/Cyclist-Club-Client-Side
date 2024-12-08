@@ -27,7 +27,7 @@ const NewInfo = () => {
         {/* Card  */}
         {newsInfos.map((info) => (
           <>
-            <div className="card image-full lg:w-96 mx-auto rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out lg:mt-0 mt-2">
+            <div key={info._id} className="card image-full lg:w-96 mx-auto rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out lg:mt-0 mt-2">
               <figure>
                 <img src={img} alt="New Info" className="rounded-lg" />
               </figure>

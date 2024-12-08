@@ -6,7 +6,7 @@ const useContact = () => {
     const axiosPublic = useAxiosPublic();
 
   const {refetch, data: contact = [] } = useQuery({
-    queryKey: ["contact"],
+    queryKey: "contact",
     queryFn: async () => {
       const res = await axiosPublic.get("/contact");
       return res.data;

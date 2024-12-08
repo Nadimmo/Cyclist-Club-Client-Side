@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 const useNewsInfo = () => {
     const axiosPublic = useAxiosPublic();
     const { data: newsInfos = [] } = useQuery({
-      queryKey: "newsInfos",
+      queryKey: ["newsInfos"],
       queryFn: async () => {
         const res = await axiosPublic.get("/newsInfo");
         return res.data

@@ -1,9 +1,13 @@
 import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import useAdmin from "../Hooks/useAdmin";
+import useModerator from "../Hooks/useModerator";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const {isAdmin} = useAdmin()
+  const {isModerator} = useModerator()
   const [showPopup, setShowPopup] = useState(false);
 
   const handleLogout = () => {
@@ -65,7 +69,33 @@ const Navbar = () => {
           Gallery
         </NavLink>
       </li>
-      <li>
+      {user && isAdmin &&<li>
+        <NavLink
+          to="/dashboard/users"
+          className={({ isActive }) =>
+            `hover:text-yellow-400 ${
+              isActive ? "text-yellow-400" : "text-white"
+            }`
+          }
+        >
+        Dashboard
+        </NavLink>
+      </li>
+      }
+      {user && isModerator &&<li>
+        <NavLink
+          to="/dashboard/users"
+          className={({ isActive }) =>
+            `hover:text-yellow-400 ${
+              isActive ? "text-yellow-400" : "text-white"
+            }`
+          }
+        >
+        Dashboard
+        </NavLink>
+      </li>
+      }
+      {user && !isAdmin &&<li>
         <NavLink
           to="/dashboard/event"
           className={({ isActive }) =>
@@ -77,6 +107,8 @@ const Navbar = () => {
           Dashboard
         </NavLink>
       </li>
+      }
+      
       <li>
         <NavLink
           to="/contact"

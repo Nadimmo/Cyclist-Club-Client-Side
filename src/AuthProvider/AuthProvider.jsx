@@ -53,20 +53,23 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
       console.log(currentUser);
       const userInfo = { email: currentUser.email };
-      axiosPublic.post("/jwt", userInfo).then((res) => {
-        if (res.data.token) {
-          localStorage.setItem("access-token", res.data.token);
-          setLoading(false);
-        } else {
-          localStorage.removeItem("access-token");
-          setLoading(false);
-        }
-      });
+      //create jwt
+      if (currentUser) {
+        axiosPublic.post("/jwt", userInfo).then((res) => {
+          if (res.data.token) {
+            localStorage.setItem("access-token", res.data.token);
+            setLoading(false);
+          } else {
+            localStorage.removeItem("access-token");
+            setLoading(false);
+          }
+        });
+      }
     });
     return () => {
       Unsubscribe();
     };
-  }, [ axiosPublic]);
+  }, [axiosPublic]);
 
   const AuthInfo = {
     register,

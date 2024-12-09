@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const AddImage = () => {
   const [imageFile, setImageFile] = useState(null);
-  const axiosSecure = useAxiosSecure()
+  const axiosPublic = useAxiosPublic()
   const hosting_image_key = "1b65a8a855445b1b3daf858e85fd4479";
   const hosting_image_api = `https://api.imgbb.com/1/upload?key=${hosting_image_key}`;
-
 
   const handleImageChange = (e) => {
     setImageFile(e.target.files[0]);
@@ -27,20 +26,22 @@ const AddImage = () => {
     formData.append("image", imageFile);
 
     try {
-   
-      const response = await axiosSecure.post(
-        hosting_image_api,
-        formData
-      );
+      const response = await axiosPublic.post(hosting_image_api, formData);
 
       if (response.data.success) {
         const imageUrl = response.data.data.url;
 
         // Save the image URL to the database (dummy endpoint used here)
-        await axiosSecure.post("/save-image", { url: imageUrl });
-
-        // Show success alert
-        Swal.fire("Success", "Image uploaded and saved successfully!", "success");
+        await axiosPublic.post("/gallery", { url: imageUrl }).then((res) => {
+          if (res.data.insertedId) {
+            // Show success alert
+            Swal.fire(
+              "Success",
+              "Image uploaded and saved successfully!",
+              "success"
+            );
+          }
+        });
       } else {
         Swal.fire("Error", "Failed to upload image to ImageBB", "error");
       }

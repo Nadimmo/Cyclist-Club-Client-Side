@@ -34,7 +34,7 @@ const PrivateRoute = ({ children }) => {
   }
 
   // If no user, redirect to login page and preserve the current location
-  return <Navigate state={location.pathname} replace={true} to="/login" />;
+  return <Navigate to="/login" state={location.pathname} replace={true}  />;
 };
 
 export default PrivateRoute;

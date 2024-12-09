@@ -1,14 +1,15 @@
 import React, { useContext, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import useAdmin from "../Hooks/useAdmin";
 import useModerator from "../Hooks/useModerator";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  const {isAdmin} = useAdmin()
-  const {isModerator} = useModerator()
+  const { isAdmin } = useAdmin();
+  const { isModerator } = useModerator();
   const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logOut();
@@ -19,15 +20,23 @@ const Navbar = () => {
     setShowPopup(!showPopup);
   };
 
+  const navigateToDashboard = () => {
+    if (isAdmin) {
+      navigate("/dashboard/users"); // Admin route
+    } else if (isModerator) {
+      navigate("/dashboard/addEvent"); // Moderator route
+    } else if (user) {
+      navigate("/dashboard/event"); // Normal user route
+    }
+  };
+
   const Links = (
     <>
       <li>
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `hover:text-yellow-400 ${
-              isActive ? "text-yellow-400" : "text-white"
-            }`
+            `hover:text-yellow-400 ${isActive ? "text-yellow-400" : "text-white"}`
           }
         >
           Home
@@ -37,9 +46,7 @@ const Navbar = () => {
         <NavLink
           to="/about"
           className={({ isActive }) =>
-            `hover:text-yellow-400 ${
-              isActive ? "text-yellow-400" : "text-white"
-            }`
+            `hover:text-yellow-400 ${isActive ? "text-yellow-400" : "text-white"}`
           }
         >
           About
@@ -49,9 +56,7 @@ const Navbar = () => {
         <NavLink
           to="/calender"
           className={({ isActive }) =>
-            `hover:text-yellow-400 ${
-              isActive ? "text-yellow-400" : "text-white"
-            }`
+            `hover:text-yellow-400 ${isActive ? "text-yellow-400" : "text-white"}`
           }
         >
           Event-Calender
@@ -61,61 +66,17 @@ const Navbar = () => {
         <NavLink
           to="/gallery"
           className={({ isActive }) =>
-            `hover:text-yellow-400 ${
-              isActive ? "text-yellow-400" : "text-white"
-            }`
+            `hover:text-yellow-400 ${isActive ? "text-yellow-400" : "text-white"}`
           }
         >
           Gallery
         </NavLink>
       </li>
-      {user && isAdmin &&<li>
-        <NavLink
-          to="/dashboard/users"
-          className={({ isActive }) =>
-            `hover:text-yellow-400 ${
-              isActive ? "text-yellow-400" : "text-white"
-            }`
-          }
-        >
-        Dashboard
-        </NavLink>
-      </li>
-      }
-      {user && isModerator &&<li>
-        <NavLink
-          to="/dashboard/users"
-          className={({ isActive }) =>
-            `hover:text-yellow-400 ${
-              isActive ? "text-yellow-400" : "text-white"
-            }`
-          }
-        >
-        Dashboard
-        </NavLink>
-      </li>
-      }
-      {user && !isAdmin &&<li>
-        <NavLink
-          to="/dashboard/event"
-          className={({ isActive }) =>
-            `hover:text-yellow-400 ${
-              isActive ? "text-yellow-400" : "text-white"
-            }`
-          }
-        >
-          Dashboard
-        </NavLink>
-      </li>
-      }
-      
       <li>
         <NavLink
           to="/contact"
           className={({ isActive }) =>
-            `hover:text-yellow-400 ${
-              isActive ? "text-yellow-400" : "text-white"
-            }`
+            `hover:text-yellow-400 ${isActive ? "text-yellow-400" : "text-white"}`
           }
         >
           Contact
@@ -189,15 +150,21 @@ const Navbar = () => {
                 )}
               </div>
               {showPopup && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg p-4">
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg p-4 z-10">
                   <p className="font-semibold mb-2 text-center">
                     {user.displayName || "User"}
                   </p>
                   <button
                     onClick={handleLogout}
-                    className="btn btn-sm w-full bg-blue-500 hover:bg-blue-600 text-white"
+                    className="btn btn-sm w-full bg-blue-500 hover:bg-blue-600 text-white mb-2"
                   >
                     Sign Out
+                  </button>
+                  <button
+                    onClick={navigateToDashboard}
+                    className="btn btn-sm w-full bg-yellow-500 hover:bg-yellow-600 text-black"
+                  >
+                    Go to Dashboard
                   </button>
                 </div>
               )}

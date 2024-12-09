@@ -6,9 +6,8 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext); // Correct use of useContext
-  const {isAdmin } = useAdmin();
+  const { isAdmin } = useAdmin();
   const { isModerator } = useModerator();
-
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -16,9 +15,9 @@ const Dashboard = () => {
       <div className="lg:w-64 min-h-screen bg-gradient-to-b from-sky-500 via-indigo-500 to-purple-600 text-white p-6 shadow-lg">
         <h2 className="text-3xl font-bold mb-6 text-center">Dashboard</h2>
         <ul className="space-y-4">
-          {isAdmin || isModerator ? (
+          {isAdmin ? (
+            // Admin Dashboard
             <>
-              {/* Admin & Moderator Dashboard */}
               <li>
                 <NavLink
                   to="users"
@@ -27,6 +26,34 @@ const Dashboard = () => {
                   All Users
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  to="request"
+                  className="text-xl hover:text-yellow-300 transition duration-300"
+                >
+                  Request User
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="newsUpdate"
+                  className="text-xl hover:text-yellow-300 transition duration-300"
+                >
+                  News & Update
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/"
+                  className="text-xl hover:text-yellow-300 transition duration-300"
+                >
+                  Home
+                </NavLink>
+              </li>
+            </>
+          ) : isModerator ? (
+            // Moderator Dashboard
+            <>
               <li>
                 <NavLink
                   to="addEvent"
@@ -53,14 +80,6 @@ const Dashboard = () => {
               </li>
               <li>
                 <NavLink
-                  to="request"
-                  className="text-xl hover:text-yellow-300 transition duration-300"
-                >
-                  Request User
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
                   to="/"
                   className="text-xl hover:text-yellow-300 transition duration-300"
                 >
@@ -69,8 +88,8 @@ const Dashboard = () => {
               </li>
             </>
           ) : user ? (
+            // Normal User Dashboard
             <>
-              {/* Normal User Dashboard */}
               <li>
                 <NavLink
                   to="event"
@@ -113,6 +132,7 @@ const Dashboard = () => {
               </li>
             </>
           ) : (
+            // If no user is logged in
             <p className="text-center text-xl mt-6">
               Please log in to access the dashboard.
             </p>

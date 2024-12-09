@@ -4,6 +4,7 @@ import { FaNutritionix, FaSupple } from "react-icons/fa";
 import { MdHealthAndSafety } from "react-icons/md";
 import { IoBicycle } from "react-icons/io5";
 import { FaScrewdriverWrench } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 const Banner = () => {
   return (
     <div className="background">
@@ -17,18 +18,18 @@ const Banner = () => {
             Racing is still encouraged and remains an important part of the Team. Members are welcome to race if they choose to do so.
             </p>
             <div className="flex flex-wrap justify-center">
-              <button
+              <Link to={'/dashboard/team'}
                 type="button"
                 className=" px-8 py-3 m-2 text-lg bg-[#f8c537f3] rounded-xl font-semibold  text-white hover:btn-outline"
               >
                 Our Club
-              </button>
-              <button
+              </Link>
+              <Link to={"/contact"}
                 type="button"
                 className=" px-8 py-3 m-2 text-lg border rounded-xl dark:border-gray-300 dark:text-gray-50 hover:btn-outline"
               >
                 Contact us
-              </button>
+              </Link>
             </div>
           </div>
         </div>

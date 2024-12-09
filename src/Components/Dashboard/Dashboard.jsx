@@ -9,7 +9,6 @@ const Dashboard = () => {
   const {isAdmin } = useAdmin();
   const { isModerator } = useModerator();
 
-  console.log(user)
   console.log(isAdmin);
 
   return (
@@ -35,6 +34,14 @@ const Dashboard = () => {
                   className="text-xl hover:text-yellow-300 transition duration-300"
                 >
                   Add Event
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="addImage"
+                  className="text-xl hover:text-yellow-300 transition duration-300"
+                >
+                  Add Image
                 </NavLink>
               </li>
               <li>

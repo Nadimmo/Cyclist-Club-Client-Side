@@ -24,7 +24,7 @@ const OurTeam = () => {
               className="w-24 h-24 rounded-full mx-auto"
             />
           </div>
-          <h3 className="text-xl font-medium text-teal-800">Md Rakibul Islam</h3>
+          <h3 className="text-xl font-medium text-teal-800">Md Rahibul Hasan Rakib</h3>
           <p className="text-gray-600">Founder</p>
         </div>
       </section>
@@ -36,7 +36,7 @@ const OurTeam = () => {
           {[
             { name: 'Sajid Hossain', title: 'Admin' },
             { name: 'Obayed Ali Sarkar', title: 'Admin' },
-            { name: 'Sojib Chandra Roy', title: 'Admin' },
+            { name: 'Sezan Mahmud Asif', title: 'Admin' },
           ].map((admin, index) => (
             <div className="text-center" key={index}>
               <div className="mb-4">

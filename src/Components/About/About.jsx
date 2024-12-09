@@ -44,9 +44,9 @@ const AboutPage = () => {
               />
             </div>
             <h3 className="text-xl font-medium text-teal-800">
-              Md Rakibul Islam
+              Md Rahibul Hasan Rakib
             </h3>
-            <p className="text-gray-600">Group Admin</p>
+            <p className="text-gray-600">Founder</p>
           </div>
 
           {/* Admin 2 */}
@@ -58,7 +58,7 @@ const AboutPage = () => {
                 className="w-24 h-24 rounded-full mx-auto"
               />
             </div>
-            <h3 className="text-xl font-medium text-teal-800">Sajid Islam</h3>
+            <h3 className="text-xl font-medium text-teal-800">Sajid Hossain</h3>
             <p className="text-gray-600">Admin</p>
           </div>
 

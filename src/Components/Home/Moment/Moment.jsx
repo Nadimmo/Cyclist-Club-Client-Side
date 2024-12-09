@@ -13,6 +13,7 @@ import group3 from "../../../assets/group3.jpg";
 import group4 from "../../../assets/group4.jpg";
 import group5 from "../../../assets/group5.jpg";
 import group6 from "../../../assets/vertical.jpg";
+import { Link } from "react-router-dom";
 
 const Moment = () => {
   return (
@@ -38,7 +39,7 @@ const Moment = () => {
             drive of our major metropolitan cities, the Cycling Classics are the
             ultimate Gran Fondo experience.
           </p>
-          <button className="btn mt-4 btn-outline ">Join Today</button>
+          <Link to={'/contact'} className="btn mt-4 btn-outline ">Join Today</Link>
         </div>
         <div className="lg:grid grid-cols-2 gap-4 lg:mt-0 mt-10">
           <img src={img1} alt="loading..." className="lg:w-80 mt-4 lg:mt-0" />

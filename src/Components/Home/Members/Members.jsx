@@ -1,14 +1,11 @@
 import React from "react";
 import MemberCard from "./MemberCard";
-import man from "../../../assets/member.jpg";
-import man2 from "../../../assets/obayed.jpg";
-import man3 from "../../../assets/sajid.jpg";
 
 const Members = () => {
   const memberData = [
-    { image: man, name: "Rakibul Islam", role: "Founder Rangpur Cyclist" },
-    { image: man2, name: "Obayed Ali Sarkar", role: "Admin Rangpur Cyclist" },
-    { image: man3, name: "Sajid Islam", role: "Admin Rangpur Cyclist" },
+    { image: "https://i.ibb.co.com/jkPQShw/Ellipse-2.png", name: "Rakibul Islam", role: "Founder Rangpur Cyclist" },
+    { image: "https://i.ibb.co.com/jkPQShw/Ellipse-2.png", name: "Obayed Ali Sarkar", role: "Admin Rangpur Cyclist" },
+    { image: "https://i.ibb.co.com/jkPQShw/Ellipse-2.png", name:"Sajid Hossain", role: "Admin Rangpur Cyclist" },
   ];
 
   return (

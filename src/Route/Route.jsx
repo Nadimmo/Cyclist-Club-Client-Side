@@ -21,6 +21,7 @@ import AddNewsInfoPage from '../Components/Dashboard/AddNewsInfoPage/AddNewsInfo
 import EventCalender from '../Components/EventCalender/EventCalender';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import Request from '../Components/Dashboard/Request/Request';
+import AddImage from '../Components/Dashboard/AddImage/AddImage';
 
 const Router = createBrowserRouter([
   {
@@ -98,6 +99,10 @@ const Router = createBrowserRouter([
         {
             path:'request',
             element: <Request></Request>
+        },
+        {
+            path: 'addImage',
+            element: <AddImage></AddImage>
         }
     ]
   }

@@ -5,9 +5,11 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const AddImage = () => {
   const [imageFile, setImageFile] = useState(null);
-  const axiosPublic = useAxiosPublic()
-  const hosting_image_key = "1b65a8a855445b1b3daf858e85fd4479";
-  const hosting_image_api = `https://api.imgbb.com/1/upload?key=${hosting_image_key}`;
+  const axiosPublic = useAxiosPublic();
+  
+  // Replace these with your Cloudinary details
+  const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dbjqzpbze/image/upload";
+  const CLOUDINARY_UPLOAD_PRESET = "cyclist club";
 
   const handleImageChange = (e) => {
     setImageFile(e.target.files[0]);
@@ -21,33 +23,32 @@ const AddImage = () => {
       return;
     }
 
-    // Upload to ImageBB
+    // Create FormData and append required Cloudinary fields
     const formData = new FormData();
-    formData.append("image", imageFile);
+    formData.append("file", imageFile);
+    formData.append("cyclist club", CLOUDINARY_UPLOAD_PRESET);
 
     try {
-      const response = await axiosPublic.post(hosting_image_api, formData);
+      // Upload image to Cloudinary
+      const response = await axios.post(CLOUDINARY_URL, formData);
+      const imageUrl = response.data.secure_url;
 
-      if (response.data.success) {
-        const imageUrl = response.data.data.url;
+      if (imageUrl) {
+        // Save the image URL to your database
+        const saveResponse = await axiosPublic.post("/gallery", { url: imageUrl });
 
-        // Save the image URL to the database (dummy endpoint used here)
-        await axiosPublic.post("/gallery", { url: imageUrl }).then((res) => {
-          if (res.data.insertedId) {
-            // Show success alert
-            Swal.fire(
-              "Success",
-              "Image uploaded and saved successfully!",
-              "success"
-            );
-          }
-        });
+        if (saveResponse.data.insertedId) {
+          // Show success alert
+          Swal.fire("Success", "Image uploaded and saved successfully!", "success");
+        } else {
+          Swal.fire("Error", "Failed to save the image in the database.", "error");
+        }
       } else {
-        Swal.fire("Error", "Failed to upload image to ImageBB", "error");
+        Swal.fire("Error", "Failed to upload the image to Cloudinary.", "error");
       }
     } catch (error) {
       console.error("Error:", error);
-      Swal.fire("Error", "An unexpected error occurred", "error");
+      Swal.fire("Error", "An unexpected error occurred.", "error");
     }
   };
 

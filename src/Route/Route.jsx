@@ -22,6 +22,7 @@ import EventCalender from '../Components/EventCalender/EventCalender';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import Request from '../Components/Dashboard/Request/Request';
 import AddImage from '../Components/Dashboard/AddImage/AddImage';
+import AdminPrivateRoute from '../PrivateRoute/AdminPrivateRoute';
 
 const Router = createBrowserRouter([
   {
@@ -86,19 +87,20 @@ const Router = createBrowserRouter([
         // admin dashboard
         {
             path:"users",
-            element: <AllUsers></AllUsers>
+            element: <AdminPrivateRoute><AllUsers></AllUsers></AdminPrivateRoute> 
         },
         {
-            path:"addEvent",
-            element: <AddEvent></AddEvent>
+            path:'request',
+            element: <AdminPrivateRoute><Request></Request></AdminPrivateRoute> 
         },
         {
             path:'newsUpdate',
             element: <AddNewsInfoPage></AddNewsInfoPage>
         },
+        // moderator route
         {
-            path:'request',
-            element: <Request></Request>
+            path:"addEvent",
+            element:  <AddEvent></AddEvent>
         },
         {
             path: 'addImage',

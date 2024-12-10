@@ -23,6 +23,7 @@ import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import Request from '../Components/Dashboard/Request/Request';
 import AddImage from '../Components/Dashboard/AddImage/AddImage';
 import AdminPrivateRoute from '../PrivateRoute/AdminPrivateRoute';
+import ModeratorPrivateRoute from '../PrivateRoute/ModeratorPrivateRote';
 
 const Router = createBrowserRouter([
   {
@@ -100,11 +101,11 @@ const Router = createBrowserRouter([
         // moderator route
         {
             path:"addEvent",
-            element:  <AddEvent></AddEvent>
+            element: <ModeratorPrivateRoute><AddEvent></AddEvent></ModeratorPrivateRoute> 
         },
         {
             path: 'addImage',
-            element: <AddImage></AddImage>
+            element: <ModeratorPrivateRoute><AddImage></AddImage></ModeratorPrivateRoute> 
         }
     ]
   }

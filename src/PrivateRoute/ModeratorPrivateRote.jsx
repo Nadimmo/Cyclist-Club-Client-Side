@@ -1,17 +1,17 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
-import useAdmin from "../Components/Hooks/useAdmin";
 import { useContext } from "react";
 import { Bars } from "react-loader-spinner";
+import useModerator from "../Components/Hooks/useModerator";
 
-const AdminPrivateRoute = ({ children }) => {
-  const { isAdmin, isAdminLoading } = useAdmin();
+const ModeratorPrivateRoute = ({ children }) => {
+  const {isModerator, isModeratorLoading} = useModerator()
   const { user, loading, logOut } = useContext(AuthContext);
   const location = useLocation();
 
   // Show loading spinner if admin or auth is still loading
-  if (loading || isAdminLoading) {
+  if (loading || isModeratorLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
        
@@ -30,12 +30,12 @@ const AdminPrivateRoute = ({ children }) => {
   }
 
   // If user is logged in and is an admin, render children
-  if (user && isAdmin) {
+  if (user && isModerator) {
     return children;
   }
 
   // If not an admin or user, log out and navigate to login page
-  if (!user || !isAdmin) {
+  if (!user || !isModerator) {
     logOut();
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
@@ -43,4 +43,4 @@ const AdminPrivateRoute = ({ children }) => {
   return null;
 };
 
-export default AdminPrivateRoute;
+export default ModeratorPrivateRoute;

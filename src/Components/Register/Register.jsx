@@ -69,8 +69,8 @@ const Register = () => {
   // Animation for a smooth, color-changing gradient background
   const animatedBackground = useSpring({
     loop: { reverse: true },
-    from: { background: "linear-gradient(45deg, #4F46E5, #EC4899)" },
-    to: { background: "linear-gradient(45deg, #FBBF24, #A78BFA)" },
+    from: { background: "linear-gradient(45deg, #03A6A1, #FFE3BB)" },
+    to: { background: "linear-gradient(45deg, #4DA8DA, #80D8C3)" },
     config: { duration: 6000 },
   });
 
@@ -117,17 +117,17 @@ const Register = () => {
             email: email,
           };
           axiosPublic.post('/users', userInfo)
-          .then(res =>{
-            if(res.data.insertedId){
-              Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: ` Register Successfully`,
-                showConfirmButton: false,
-                timer: 1500,
-              });
-            }
-          })
+            .then(res => {
+              if (res.data.insertedId) {
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: ` Register Successfully`,
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+              }
+            })
           navigate(location.state || "/");
         }
       })
@@ -312,24 +312,18 @@ const Register = () => {
           </Link>
         </p>
         <div className="divider">Or</div>
-        <div className=" hover:cursor-pointer text-3xl  mx-auto">
-          <button className="w-full p-2 rounded-2xl border-2 border-black flex justify-center m-2 hover:bg-base-200">
-            <FaMicrosoft className="ml-5"></FaMicrosoft>
-            <p className="text-lg ml-6">sign in with microsoft</p>
+        <div className=" hover:cursor-pointer text-3xl space-x-5  mx-auto">
+          <button className="btn bg-[#2F2F2F] text-white border-black">
+            <svg aria-label="Microsoft logo" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M96 96H247V247H96" fill="#f24f23"></path><path d="M265 96V247H416V96" fill="#7eba03"></path><path d="M96 265H247V416H96" fill="#3ca4ef"></path><path d="M265 265H416V416H265" fill="#f9ba00"></path></svg>
+            Sign in with Microsoft
           </button>
-          <button
-            onClick={handlerGoogle}
-            className="w-full p-2 rounded-2xl border-2 border-black flex justify-center m-2 hover:bg-base-200"
-          >
-            <FaGoogle></FaGoogle>
-            <p className="text-lg ml-6">sign in with google</p>
+          <button onClick={handlerGoogle} className="btn bg-white text-black border-[#e5e5e5]">
+            <svg aria-label="Google logo" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path d="m0 0H512V512H0" fill="#fff"></path><path fill="#34a853" d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"></path><path fill="#4285f4" d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"></path><path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path fill="#ea4335" d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"></path></g></svg>
+            Sign in with Google
           </button>
-          <button
-            onClick={handlerTwitter}
-            className="w-full p-2 rounded-2xl border-2 border-black flex justify-center m-2 hover:bg-base-200"
-          >
-            <FaTwitter></FaTwitter>
-            <p className="text-lg ml-6">sign in with twitter</p>
+          <button onClick={handlerTwitter} className="btn bg-black text-white border-black">
+            <svg aria-label="X logo" width="16" height="12" viewBox="0 0 300 271" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="m236 0h46l-101 115 118 156h-92.6l-72.5-94.8-83 94.8h-46l107-123-113-148h94.9l65.5 86.6zm-16.1 244h25.5l-165-218h-27.4z" /></svg>
+            Sign in with Twitter
           </button>
         </div>
       </form>

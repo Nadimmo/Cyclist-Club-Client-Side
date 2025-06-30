@@ -53,7 +53,7 @@ const AuthProvider = ({ children }) => {
     const Unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
-      console.log(currentUser);
+      // console.log(currentUser);
       const userInfo = { email: currentUser.email };
       //create jwt
       if (currentUser) {

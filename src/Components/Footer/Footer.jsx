@@ -9,7 +9,7 @@ const Footer = () => {
           {/* Logo and About */}
           <div className="text-center lg:text-left">
             <h2 className="text-3xl font-bold mb-2">Rangpur Cyclist</h2>
-            <p className="text-sm text-gray-200 w-96">
+            <p className="text-sm text-gray-200 lg:w-96">
               Join us in promoting a healthy and active lifestyle through cycling.
               Whether you're a beginner or a pro, there's a place for you in our club!
             </p>

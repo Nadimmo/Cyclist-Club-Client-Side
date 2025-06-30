@@ -40,7 +40,7 @@ const Login = () => {
 
   return (
     <div className="my-5">
-      <div className="hero rounded-2xl  p-6">
+      <div className="hero rounded-2xl  lg:p-6 ">
         <div className="hero-content rounded-xl bg-gradient-to-t from-indigo-500 via-purple-500 to-pink-500  flex-col lg:flex-row">
           <div className="text-center lg:text-left">
             <img src={img} alt="" className="rounded-xl" />
